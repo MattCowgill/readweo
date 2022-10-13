@@ -32,3 +32,33 @@ You can install `{readweo}` from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("MattCowgill/readweo")
 ```
+
+## Usage
+
+The package has one key function: `read_weo()`.
+
+You can use it like so:
+
+```{r}
+library(readweo)
+weo <- read_weo("Oct 2022")
+weo
+```
+
+`read_weo()` returns a tidy (long) tibble. 
+
+
+```{r}
+library(dplyr)
+library(ggplot2)
+weo |> 
+  filter(country == "Australia",
+         subject_descriptor == "Unemployment rate") |> 
+  ggplot(aes(x = year, y = value)) +
+  geom_line() +
+  geom_vline(aes(xintercept = estimates_start_after),
+             linetype = 2) +
+  theme_minimal() +
+  labs(subtitle = "Australian unemployment rate with IMF forecast")
+
+```

@@ -1,24 +1,13 @@
 import_weo <- function(file) {
-  # old_vroom_opt <- Sys.getenv("VROOM_CONNECTION_SIZE")
-  # Sys.setenv(VROOM_CONNECTION_SIZE = as.integer(10000000))
-  # on.exit(Sys.setenv(VROOM_CONNECTION_SIZE = old_vroom_opt))
 
-  raw_df <- suppressMessages(
-    suppressWarnings(
-      readr::with_edition(1,
-                          readr::read_tsv(file,
-                                          col_types = readr::cols("c", .default = readr::col_double())))
-    )
+  guessed_encoding <- readr::guess_encoding(file)$encoding[1]
+
+  suppressMessages(
+    readr::read_tsv(file,
+                    col_types = readr::cols(readr::col_character()),
+                    locale = readr::locale(encoding = guessed_encoding))
   )
 
-  # raw_df <- data.table::fread(cmd = paste0("sed 's/\\0//g' ", file))
-
-  # suppressWarnings(
-  #   raw_df <-   read.delim(file,
-  #                          fileEncoding = "UTF-16LE")
-  # )
-
-  raw_df
 }
 
 #' @importFrom rlang .data .env
@@ -34,11 +23,12 @@ tidy_weo <- function(df) {
     dplyr::as_tibble() |>
     janitor::remove_empty(c("rows", "cols")) |>
     janitor::clean_names() |>
+    dplyr::filter(!grepl("International Monetary Fund", .data$weo_country_code, fixed = TRUE)) |>
     dplyr::mutate(dplyr::across(dplyr::starts_with("x"),
                                 as.character)) |>
     tidyr::pivot_longer(cols = dplyr::starts_with("x"),
                         names_to = "year") |>
-    dplyr::mutate(year = gsub("x", "", .data$year),
+    dplyr::mutate(year = gsub("x", "", .data$year, fixed = TRUE),
                   dplyr::across(c(.data$year, .data$value),
                          parse_number_nowarning)) |>
     dplyr::filter(!is.na(.data$value))

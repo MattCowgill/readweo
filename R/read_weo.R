@@ -10,9 +10,11 @@
 #' or "April 2021".
 #' @param path Path to directory where downloaded file should be stored
 #' @examples
+#' \dontrun{
 #' read_weo("Oct 2022")
 #'
 #' read_weo("April 2019")
+#' }
 #' @export
 read_weo <- function(month_year,
                      path = tempdir()) {
@@ -27,6 +29,7 @@ read_weo <- function(month_year,
     stop("WEO for the specified `month_year` cannot be found.")
   }
 
+  # The WEO files present themselves as .xls, but they're actually .tsv :|
   file <- file.path(path,
                     paste0("IMF-WEO-",
                            weo_date,
