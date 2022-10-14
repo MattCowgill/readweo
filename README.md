@@ -14,8 +14,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 ‘experimental’ phase. I do not plan to submit this to CRAN and I offer
 no guarantees that it will continue to work.**
 
-`{readweo}` provides convenience functions to download, import and tidy
-data from the IMF’s World Economic Outlook.
+`{readweo}` helps you download, import and tidy data from the IMF’s
+World Economic Outlook.
 
 ## Installation
 
@@ -57,6 +57,8 @@ weo
 
 `read_weo()` returns a tidy (long) tibble.
 
+You can use it like this:
+
 ``` r
 library(dplyr)
 #> 
@@ -69,14 +71,14 @@ library(dplyr)
 #>     intersect, setdiff, setequal, union
 library(ggplot2)
 weo |> 
-  filter(country == "Australia",
+  filter(country %in% c("New Zealand", "Australia"),
          subject_descriptor == "Unemployment rate") |> 
-  ggplot(aes(x = year, y = value)) +
+  ggplot(aes(x = year, y = value, col = country)) +
   geom_line() +
   geom_vline(aes(xintercept = estimates_start_after),
              linetype = 2) +
   theme_minimal() +
-  labs(subtitle = "Australian unemployment rate with IMF forecast")
+  labs(subtitle = "Unemployment rate with IMF forecast")
 ```
 
 <img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
