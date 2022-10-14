@@ -70,9 +70,9 @@ library(dplyr)
 #> 
 #>     intersect, setdiff, setequal, union
 library(ggplot2)
-weo |> 
+weo %>% 
   filter(country %in% c("New Zealand", "Australia"),
-         subject_descriptor == "Unemployment rate") |> 
+         subject_descriptor == "Unemployment rate") %>% 
   ggplot(aes(x = year, y = value, col = country)) +
   geom_line() +
   geom_vline(aes(xintercept = estimates_start_after),

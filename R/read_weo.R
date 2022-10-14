@@ -43,8 +43,7 @@ read_weo <- function(month_year,
 
   weo <- tidy_weo(raw_weo)
 
-  weo |>
-    dplyr::mutate(weo_date = weo_date)
+  dplyr::mutate(weo, weo_date = weo_date)
 
 }
 
