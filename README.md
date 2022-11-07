@@ -10,10 +10,6 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/MattCowgill/readweo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MattCowgill/readweo/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-**Note that this package is intended for my own use. It is in an
-‘experimental’ phase. I do not plan to submit this to CRAN and I offer
-no guarantees that it will continue to work.**
-
 `{readweo}` helps you download, import and tidy data from the IMF’s
 World Economic Outlook.
 

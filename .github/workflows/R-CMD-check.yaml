@@ -5,6 +5,9 @@ on:
     branches: [main, master]
   pull_request:
     branches: [main, master]
+  schedule:
+  # Run at 1:35am UTC = 11:30 Melb std time
+    - cron:  '35 1 * * THU'
 
 name: R-CMD-check
 
