@@ -11,5 +11,8 @@ test_that("read_weo() words", {
     check_df(month)
   }
 
+  # Test default with no month specified
+  check_df(read_weo())
+
   expect_error(read_weo("Sep 2022"))
 })
