@@ -6,8 +6,9 @@
 #' downloadable tables. `read_weo()` downloads, imports, and tidies these
 #' tables.
 #'
-#' @param month_year Character string such as "Oct 2022" or "October 2022"
-#' or "April 2021". `NULL` (the default) means `read_weo()` will try to
+#' @param month_year Date, or a month-year character string such as
+#' "Oct 2022" or "October 2022" or "April 2021".
+#' `NULL` (the default) means `read_weo()` will try to
 #' fetch the latest available WEO.
 #' @param path Path to directory where downloaded file should be stored
 #' @examples
@@ -22,8 +23,14 @@ read_weo <- function(month_year = NULL,
 
   if (is.null(month_year)) {
     weo_date <- guess_latest_weo()
-  } else {
+  }
+
+  if (is.character(month_year)) {
     weo_date <- lubridate::dmy(paste0("01-", month_year))
+  }
+
+  if (inherits(month_year, "Date")) {
+    weo_date <- month_year
   }
 
   stopifnot(inherits(weo_date, "Date"))

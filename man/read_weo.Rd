@@ -7,8 +7,9 @@
 read_weo(month_year = NULL, path = tempdir())
 }
 \arguments{
-\item{month_year}{Character string such as "Oct 2022" or "October 2022"
-or "April 2021". \code{NULL} (the default) means \code{read_weo()} will try to
+\item{month_year}{Date, or a month-year character string such as
+"Oct 2022" or "October 2022" or "April 2021".
+\code{NULL} (the default) means \code{read_weo()} will try to
 fetch the latest available WEO.}
 
 \item{path}{Path to directory where downloaded file should be stored}
