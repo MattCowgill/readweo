@@ -6,8 +6,10 @@
 #' downloadable tables. `read_weo()` downloads, imports, and tidies these
 #' tables.
 #'
-#' @param month_year Character string such as "Oct 2022" or "October 2022"
-#' or "April 2021".
+#' @param month_year Date, or a month-year character string such as
+#' "Oct 2022" or "October 2022" or "April 2021".
+#' `NULL` (the default) means `read_weo()` will try to
+#' fetch the latest available WEO.
 #' @param path Path to directory where downloaded file should be stored
 #' @examples
 #' \dontrun{
@@ -16,9 +18,21 @@
 #' read_weo("April 2019")
 #' }
 #' @export
-read_weo <- function(month_year,
+read_weo <- function(month_year = NULL,
                      path = tempdir()) {
-  weo_date <- lubridate::dmy(paste0("01-", month_year))
+
+  if (is.null(month_year)) {
+    weo_date <- guess_latest_weo()
+  }
+
+  if (is.character(month_year)) {
+    weo_date <- lubridate::dmy(paste0("01-", month_year))
+  }
+
+  if (inherits(month_year, "Date")) {
+    weo_date <- month_year
+  }
+
   stopifnot(inherits(weo_date, "Date"))
 
   url <- form_weo_url(weo_date)
@@ -47,6 +61,24 @@ read_weo <- function(month_year,
 
 }
 
+guess_latest_weo <- function(today = Sys.Date()) {
+  possible_weos <- utils::tail(seq(as.Date("2000-04-01"),
+                       today,
+                       "6 months"), 2)
+
+  try_weo <- function(date) {
+    url <- form_weo_url(date)
+    check_weo_exists(url)
+  }
+
+  result_latest <- try_weo(max(possible_weos))
+
+  if (result_latest) {
+    return(max(possible_weos))
+  } else {
+    return(min(possible_weos))
+  }
+}
 
 check_weo_exists <- function(url) {
 
