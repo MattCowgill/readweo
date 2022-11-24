@@ -62,7 +62,7 @@ read_weo <- function(month_year = NULL,
 }
 
 guess_latest_weo <- function(today = Sys.Date()) {
-  possible_weos <- tail(seq(as.Date("2000-04-01"),
+  possible_weos <- utils::tail(seq(as.Date("2000-04-01"),
                        today,
                        "6 months"), 2)
 
