@@ -49,9 +49,8 @@ read_weo <- function(month_year = NULL,
                            weo_date,
                            ".tsv"))
 
-  utils::download.file(url,
-                destfile = file,
-                mode = "wb")
+  dl_file(url = url,
+          destfile = file)
 
   raw_weo <- import_weo(file)
 
@@ -59,6 +58,19 @@ read_weo <- function(month_year = NULL,
 
   dplyr::mutate(weo, weo_date = weo_date)
 
+}
+
+dl_file <- function(url, destfile, quiet = TRUE) {
+  suppressWarnings(
+    utils::download.file(
+      url = url,
+      destfile = destfile,
+      mode = "wb",
+      quiet = quiet,
+      headers = c("User-Agent" = "readweo R package - https://github.com/MattCowgill/readweo"),
+      cacheOK = FALSE
+    )
+  )
 }
 
 guess_latest_weo <- function(today = Sys.Date()) {
