@@ -1,4 +1,6 @@
 test_that("read_weo() works", {
+  options(timeout = 180)
+
   check_df <- function(df) {
     expect_s3_class(df, "tbl_df")
     expect_gt(ncol(df), 12)

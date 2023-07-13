@@ -10,8 +10,8 @@ experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](h
 [![R-CMD-check](https://github.com/MattCowgill/readweo/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/MattCowgill/readweo/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-`{readweo}` helps you download, import and tidy data from the IMF’s
-World Economic Outlook.
+`{readweo}` is an R package that helps you download, import and tidy
+data from the IMF’s World Economic Outlook.
 
 ## Installation
 
@@ -21,6 +21,9 @@ You can install `{readweo}` from [GitHub](https://github.com/) with:
 # install.packages("devtools")
 devtools::install_github("MattCowgill/readweo")
 ```
+
+`{readweo}` is not currently on CRAN. At present I do not plan to submit
+it to CRAN.
 
 ## Usage
 

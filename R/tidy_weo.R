@@ -29,7 +29,7 @@ tidy_weo <- function(df) {
     tidyr::pivot_longer(cols = dplyr::starts_with("x"),
                         names_to = "year") %>%
     dplyr::mutate(year = gsub("x", "", .data$year, fixed = TRUE),
-                  dplyr::across(c(.data$year, .data$value),
+                  dplyr::across(dplyr::all_of(c("year", "value")),
                          parse_number_nowarning)) %>%
     dplyr::filter(!is.na(.data$value))
 }
